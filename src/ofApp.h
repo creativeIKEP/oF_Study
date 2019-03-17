@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "RandomWalker.hpp"
 
 class ofApp : public ofBaseApp{
     public:
@@ -21,7 +22,5 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
 
-    vector<ofVec2f> location;
-    vector<ofVec2f> velocity;
-    static const int max = 100;
+    RandomWalker walker[100];
 };
