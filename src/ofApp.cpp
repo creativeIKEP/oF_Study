@@ -2,24 +2,32 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofEnableAlphaBlending();
-    ofSetCircleResolution(64);
-    ofBackground(0, 0, 0);
     ofSetFrameRate(60);
-    positionX=0;
-    positionY=0;
+    ofSetBackgroundColor(0);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    positionX += 3;
-    positionY+=2;
+    for(int i=0; i<location.size(); i++){
+        location[i] += velocity[i];
+        if(location[i].x < 0 || location[i].x > ofGetWidth()){
+            velocity[i].x *= -1;
+        }
+        if(location[i].y < 0 || location[i].y > ofGetHeight()){
+            velocity[i].y *= -1;
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofSetColor(0, 0, 255);
-    ofDrawCircle(positionX, positionY, 200);
+    for(int i=0; i<location.size(); i++){
+        ofSetColor(0, 0, 255);
+        ofDrawCircle(location[i], 25);
+    }
+    
+    ofSetColor(255);
+    ofDrawBitmapString("num=" + ofToString(location.size()), 20, 20);
 }
 
 //--------------------------------------------------------------
@@ -39,7 +47,13 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    if(location.size() > max){
+        location.erase(location.begin());
+        velocity.erase(velocity.begin());
+    }
+    
+    location.push_back(ofVec2f(x, y));
+    velocity.push_back(ofVec2f(ofRandom(-10, 10), ofRandom(-10, 10)));
 }
 
 //--------------------------------------------------------------
