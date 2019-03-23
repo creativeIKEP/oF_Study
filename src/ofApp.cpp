@@ -3,42 +3,49 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0);
-    ofEnableDepthTest(); // 深度テストを有効に
-    ofEnableSmoothing(); // 表示をスムースに
-    // ライティングを有効に
-    light.enable();
-    // スポットライトを配置
-    light.setSpotlight();
-    // 照明の位置
-    light.setPosition(100, 100, 100);
-    // 環境反射光の色
-    light.setAmbientColor(ofFloatColor(0.5, 0.2, 0.2, 1.0));
-    // 拡散反射光の色
-    light.setDiffuseColor(ofFloatColor(0.5, 0.5, 1.0));
-    // 鏡面反射光の色
-    light.setSpecularColor(ofFloatColor(1.0, 1.0, 1.0));
+    ofEnableDepthTest();
+    cam.setDistance(100);
+    // メッシュの幅と高さ
+    w = 100;
+    h = 100;
+    // 頂点の色を初期化
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            mesh.addColor(ofFloatColor(0.5, 0.8, 1.0));
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+    // まず全ての頂点情報を削除
+    mesh.clearVertices();
+    // 全ての頂点の位置を更新して頂点情報として追加
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            float x = sin(i * 0.1 + ofGetElapsedTimef())*10.0;
+            float y = sin(j*0.15 + ofGetElapsedTimef()) * 10.0;
+            float z = x + y;
+            mesh.addVertex(ofVec3f(i - w/2, j - h/2, z));
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    cam.begin();
-    ofSetColor(255);
-    
-    // 立方体
-    box.set(200); // サイズ設定
-    box.setPosition(-150, 0, 0); // 位置
-    box.draw(); // ワイヤーフレームを描画
-    
-    // 球
-    sphere.set(100, 16); // 半径と面の細かさ
-    sphere.setPosition(150, 0, 0); // 位置
-    sphere.draw(); // ワイヤーフレームを描画
-    cam.end();
+    // メッシュの描画
+    ofSetHexColor(0xffffff);
+    cam.begin(); // カメラ開始
+    // 頂点の位置をドットで表示
+    glPointSize(2.0);
+    glEnable(GL_POINT_SMOOTH);
+    mesh.drawVertices();
+    cam.end(); // カメラ終了
+    // ログの表示
+    string info;
+    info = "Vertex num = " + ofToString(w * h, 0) + "\n";
+    info += "FPS = " + ofToString(ofGetFrameRate(), 2);
+    ofDrawBitmapString(info, 30, 30);
 }
 
 //--------------------------------------------------------------

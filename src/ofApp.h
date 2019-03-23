@@ -21,8 +21,7 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
     
-    ofBoxPrimitive box;
-    ofSpherePrimitive sphere;
-    ofEasyCam cam;
-    ofLight light;
+    ofEasyCam cam; // カメラ
+    ofVboMesh mesh; // 3Dメッシュ
+    int w, h; // メッシュの幅と高さ
 };
