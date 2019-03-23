@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 
-#define HOST "127.0.0.1"
+
 #define PORT 8000
 
 
@@ -26,5 +26,11 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
     
-    ofxOscSender sender;
+    void dumpOSC(ofxOscMessage m); //OSCメッセージを出力
+    // OSCメッセージを受信するインスタンス
+    ofxOscReceiver receiver;
+    // 受信したマウス座標
+    ofPoint remoteMouse;
+    // 受信したマウスボタンの状態 ("up", "down")
+    string mouseButtonState;
 };
