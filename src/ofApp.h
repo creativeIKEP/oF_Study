@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxCv.h"
-#include "ofxGui.h"
 
 
 class ofApp : public ofBaseApp{
@@ -24,15 +22,7 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
     
-    void resetBackgroundPressed();
-    
-    ofVideoGrabber cam;
-    ofxCv::ContourFinder contourFinder;
-    ofxCv::RunningBackground background;
-    ofImage thresholded;
-    
-    ofxPanel gui;
-    ofxFloatSlider bgThresh; // 背景差分の閾値
-    ofxFloatSlider contourThresh; // 輪郭抽出の閾値
-    ofxButton resetBackgroundButton; // 背景リセットボタン
+    ofShader shader;
+    static const int NUM = 20;
+    float freq[NUM];
 };
