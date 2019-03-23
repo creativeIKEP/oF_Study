@@ -1,6 +1,11 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOsc.h"
+
+#define HOST "127.0.0.1"
+#define PORT 8000
+
 
 class ofApp : public ofBaseApp{
     public:
@@ -21,7 +26,5 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
     
-    ofEasyCam cam; // カメラ
-    ofVboMesh mesh; // 3Dメッシュ
-    int w, h; // メッシュの幅と高さ
+    ofxOscSender sender;
 };
