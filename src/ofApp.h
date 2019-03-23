@@ -1,10 +1,8 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxOsc.h"
-
-
-#define PORT 8000
+#include "ofxCv.h"
+#include "ofxGui.h"
 
 
 class ofApp : public ofBaseApp{
@@ -26,11 +24,15 @@ class ofApp : public ofBaseApp{
         void dragEvent(ofDragInfo dragInfo);
         void gotMessage(ofMessage msg);
     
-    void dumpOSC(ofxOscMessage m); //OSCメッセージを出力
-    // OSCメッセージを受信するインスタンス
-    ofxOscReceiver receiver;
-    // 受信したマウス座標
-    ofPoint remoteMouse;
-    // 受信したマウスボタンの状態 ("up", "down")
-    string mouseButtonState;
+    void resetBackgroundPressed();
+    
+    ofVideoGrabber cam;
+    ofxCv::ContourFinder contourFinder;
+    ofxCv::RunningBackground background;
+    ofImage thresholded;
+    
+    ofxPanel gui;
+    ofxFloatSlider bgThresh; // 背景差分の閾値
+    ofxFloatSlider contourThresh; // 輪郭抽出の閾値
+    ofxButton resetBackgroundButton; // 背景リセットボタン
 };
